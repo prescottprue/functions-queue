@@ -1,0 +1,38 @@
+root: true
+
+parser: babel-eslint
+plugins: [babel]
+
+extends: standard
+
+env:
+  es6: true
+  node: true
+
+ecmaFeatures:
+  modules: true
+
+globals:
+  sinon: true
+  describe: true
+  before: true
+  beforeEach: true
+  after: true
+  afterEach: true
+  it: true
+
+rules:
+  import/no-unresolved: 2
+  max-len: 0
+  no-else-return: 2
+  arrow-body-style: ['error', 'always']
+  curly: "error"
+  no-use-before-define: 2
+
+settings:
+  import/resolver:
+    node:
+      moduleDirectory:
+        - node_modules
+        # this sets the path the root since we have a `test` folder that will need to be included going forward.
+        - '/'
