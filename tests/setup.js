@@ -1,6 +1,6 @@
-var chai = global.chai = require('chai')
-var expect = global.expect = chai.expect
-var should = global.should = chai.should()
+const chai = global.chai = require('chai');
+const expect = global.expect = chai.expect;
+const should = global.should = chai.should();
 
 // var Promise = require('es6-promise').Promise
 // global.Promise = Promise

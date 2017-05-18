@@ -3,7 +3,7 @@ root: true
 parser: babel-eslint
 plugins: [babel]
 
-extends: standard
+extends: airbnb
 
 env:
   es6: true
