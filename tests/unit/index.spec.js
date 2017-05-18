@@ -1,8 +1,5 @@
 import Queue from '../../src';
-import * as admin from 'firebase-admin'
 
-var serviceAccount = require("../../serviceAccount.json");
-/* global describe, it, expect */
 describe('functions-queue Library', () => {
   describe('constructor', () => {
     it('throws for no event', () => {

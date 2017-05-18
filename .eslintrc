@@ -15,6 +15,7 @@ ecmaFeatures:
 globals:
   sinon: true
   describe: true
+  expect: true
   before: true
   beforeEach: true
   after: true
@@ -25,7 +26,7 @@ rules:
   import/no-unresolved: 2
   max-len: 0
   no-else-return: 2
-  arrow-body-style: ['error', 'always']
+  arrow-body-style: ['error', 'as-needed']
   curly: "error"
   no-use-before-define: 2
 
