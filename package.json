@@ -64,7 +64,6 @@
   },
   "homepage": "https://github.com/prescottprue/functions-queue",
   "dependencies": {
-    "eslint-plugin-react": "^7.0.1",
     "firebase-admin": "^4.2.1"
   },
   "devDependencies": {

@@ -9,8 +9,6 @@
 
 ## Getting Started
 
-functions-queue is universal, so it can be used client-side or server-side.
-
 1. Install through: `npm install --save functions-queue`
 
 2. Include and use `functions-queue`:
@@ -25,6 +23,65 @@ functions-queue is universal, so it can be used client-side or server-side.
       service.resolve()
     })
     ```
+
+## Why Use This?
+
+Standardizes and encapsulates progress/complete writes for task queues on Cloud Functions for Firebase (inspired by firebase-queue).
+
+## Alternatives
+
+1. Just using `event.data.adminRef` directly:
+
+
+```js
+exports.someFunc = functions.database.ref('/search/queries/{queryid}')
+  .onWrite(event => {
+  // update progress
+  const adminRootRef = event.data.adminRef.root
+    adminRootRef
+    .ref(`search/progress/${event.data.key}`)
+    .update({ value: 0 })
+  return runStage1(query)
+    .then(() => {
+      // update progress
+      adminRootRef
+        .ref(`search/progress/${event.data.key}`)
+        .update({ value: 50 })
+    })
+    .then(() => runStage2(query))
+    .then(content => {
+      // final update to progress
+      return adminRootRef
+        .ref(`search/progress/${event.data.key}`)
+        .update({ value: 100, complete: true })
+        .then(() => {
+          // set results to results collection under queryid
+          return adminRootRef
+            .ref(`search/results/${event.data.key}`)
+            .set({ content, status: 'error', completed: true })
+        })
+    })
+    .catch((error) =>
+      // set error to results
+      adminRootRef
+        .ref(`search/results/${event.data.key}`)
+        .set({ error, status: 'error', completed: true })
+    )
+})
+```
+Downsides:
+* Only works for database functions ([HTTPS only return express request](https://firebase.google.com/docs/reference/functions/functions.https) response objects, storage only return [ObjectMetadata](https://firebase.google.com/docs/reference/functions/functions.storage.ObjectMetadata), etc)
+
+2. Use `firebase-admin`:
+
+Same as above example, except `adminRootRef` is defined like so:
+
+```js
+const admin = require('firebase-admin')
+admin.initializeApp(functions.config().firebase)
+const adminRootRef = admin.database().ref()
+```
+
 ## Testing/Coverage
 
 `npm run test` - Run unit tests
